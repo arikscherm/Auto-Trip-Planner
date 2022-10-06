@@ -1,4 +1,4 @@
-from asyncore import write
+#from asyncore import write
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -10,12 +10,13 @@ import time
 
 #This is a clean script. No handling for click exception yet.
 
-#Visit URL provided for coordinates provided by all trails
-def open_driver():
-    driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
+def open_driver(coordinates,headless):
+    options = webdriver.ChromeOptions()
+    options.headless = headless
+    driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()),options=options)
+    #driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
     print("Retrieving freecampsitesnet URL")
-    #This url is a placeholder. Will eventually be a geocoded message appeneded to the base url.
-    driver.get("https://freecampsites.net/#!(37.2753,%20+-107.8801)")
+    driver.get("https://freecampsites.net/#!({},%20+{})".format(coordinates["latitude"],coordinates["longitude"]))
     driver.implicitly_wait(1)
     return driver
 
@@ -42,7 +43,7 @@ def click_tent_icon(camp):
         camp.click()
         time.sleep(2)
     except:
-        print("Click exception came up. This should cause the previous campsite to be repeated in the message.")
+        print("Click exception came up. This should cause the previous campsite to be repeated in the txt file.")
 
 def  get_campsite_html(driver):
     #Grab url from the popup link.
@@ -106,8 +107,8 @@ def create_message(free_camps,driver):
     print("fail {}".format(fails))
     return message
 
-def write_text_file():
-    driver = open_driver()
+def write_text_file(coordinates):
+    driver = open_driver(coordinates,headless=True)
     free_camps = find_free_camps(driver)
     message = create_message(free_camps,driver)
     f = open("campsites/results.txt",'w')
@@ -115,11 +116,9 @@ def write_text_file():
     f.close()
     driver.quit()
 
-def main():
-    write_text_file()
 
-main()
+# driver = write_text_file({"latitude":37.2753,"longitude":-107.8801})
+# print(driver)
 
 #TODO: Separate get_html into click_tent_ion() and click_exerpt()
-#TODO: fix overlap issue in click tent_icon()
-#TODO: Make headless
+#TODO: fix overlap issue in cl
