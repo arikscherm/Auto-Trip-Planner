@@ -1,31 +1,55 @@
 import requests
 import json
+import pprint
 
-def get_coordinates_endpoint_response(coordinates):
+
+#Uses coordinates to obtain three endpoints to call
+#get_sapi_response may be used to obtain the forecast, hourly forecast and the forecast zone. 
+def get_coordinates_json_response(coordinates):
     coordinates_url = "https://api.weather.gov/points/{},{}".format(coordinates["latitude"],coordinates["longitude"])
-    print("making coordinates request to ", coordinates_url)
+    #print("MAKING COORDINATES REQUEST TO ", coordinates_url)
     coordinates_url_response = requests.get(coordinates_url)
     coordinates_json_response = json.loads(coordinates_url_response.text)
-    print("for debugging coordinates response -->")
-    print(coordinates_json_response)
+       
+    #pprint.pprint(coordinates_json_response["properties"])
     return coordinates_json_response
 
-def process_coordinates_response(coordinates_json_response):
-    print("processing coordinates json response to prepare grid endpoint")
+
+def check_if_404(coordinates_json_response):
+    if("status" in coordinates_json_response and coordinates_json_response["status"] == 404): 
+        return True
+    else:
+        return False
+
+
+
+#This endpoint includes forecast for days and nights for one week
+def get_forecast(coordinates):
+    coordinates_json_response = get_coordinates_json_response(coordinates)
+    if(check_if_404(coordinates_json_response)): return "Data Unavailable For Requested Point"
     grid_endpoint = coordinates_json_response["properties"]["forecast"]
-    return grid_endpoint
-
-def get_forecast(grid_endpoint):
-    print("making forecast request to ", grid_endpoint)
     forecast_response = requests.get(grid_endpoint)
-    return forecast_response.text
+    return json.loads(forecast_response.text)
 
 
-def get_sapi_response(coordinates):
-    print("now inside the get_sapi_response", coordinates)
-    coordinates_json_response = get_coordinates_endpoint_response(coordinates)
-    grid_endpoint = process_coordinates_response(coordinates_json_response)
-    sapi_response = get_forecast(grid_endpoint)
-    return json.loads(sapi_response)
+#This includes an hourly forecast for one week
+def get_forecastHourly(coordinates):
+    coordinates_json_response = get_coordinates_json_response(coordinates)
+    if(check_if_404(coordinates_json_response)): return "Data Unavailable For Requested Point"
+    grid_endpoint = coordinates_json_response["properties"]["forecastHourly"]
+    forecastHourly_response = requests.get(grid_endpoint)
+    return json.loads(forecastHourly_response.text)
+    
 
-#coordinates = {"latitude" : 37.2753, "longitude" : -107.8801}
+#This retrieves where the weather data is coming from
+def get_forecastZone(coordinates):
+    coordinates_json_response = get_coordinates_json_response(coordinates)
+    if(check_if_404(coordinates_json_response)): return "Data Unavailable For Requested Point"
+    grid_endpoint = coordinates_json_response["properties"]["forecastZone"]
+    forecastZone_response = requests.get(grid_endpoint)
+    return json.loads(forecastZone_response.text)
+
+
+
+
+
