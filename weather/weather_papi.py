@@ -18,14 +18,33 @@ def process_forecastHourly(coordinates):
         return forecastHourly_response["detail"]
     try:
         forecastHourly = forecastHourly_response["properties"]["periods"]
-        desired_hour = ""
         forecast_message = ""
-        for period in forecastHourly[0:36]:
-            hour = period["startTime"][0:16].replace("T", " ")
-            if(int(hour[12])%2 == 0):
-                desired_hour = hour
-                forecast_interval = period["startTime"][0:10]
-                forecast_name = period["name"]
+        start_date = forecastHourly[0]["startTime"][8:10]
+        print(start_date)
+        for period in forecastHourly[0:24]:
+            full_date = period["startTime"][0:16].replace("T", " ")
+            if(int(full_date[12])%2 == 0):
+                name = ""
+
+                day = full_date[8:10]
+                if(day == start_date):
+                    name += "Today, "
+                else:
+                    name += "Tomorrow, "
+
+                hour = full_date[11:13]
+                if(int(hour) > 11):
+                    hour = str(int(hour)%12)
+                    if(hour == "0"): hour = "12"
+                    name += hour + "pm"
+                else:
+                    if(hour == "00"): hour = "12"
+                    hour = hour.lstrip('0')
+                    name += hour + "am"
+
+
+             #   forecast_interval = period["startTime"][0:10]
+              #  forecast_name = period["name"]
                 temperature = period["temperature"]
                 temperature_unit = period["temperatureUnit"]
                 wind_speed = period["windSpeed"]
@@ -34,7 +53,7 @@ def process_forecastHourly(coordinates):
                     details = period["detailedForecast"]
                 else:
                     details = period["shortForecast"]
-                forecast_message += desired_hour + '\n' + details + '\n' + str(temperature) + ' ' + temperature_unit + '\n' + str(wind_speed) + ' ' + wind_direction + '\n' + '\n'
+                forecast_message += name + '\n' + details + '\n' + str(temperature) + ' ' + temperature_unit + '\n' + str(wind_speed) + ' ' + wind_direction + '\n' + '\n'
         return forecast_message
     except:
         return "something went wrong"
@@ -49,7 +68,7 @@ def process_forecast(coordinates):
     try:
         forecast = forecast_response["properties"]["periods"]
         forecast_message = ""
-        for period in forecast[3:]:
+        for period in forecast[2:]:
             forecast_interval = period["startTime"][0:10]
             forecast_name = period["name"]
             temperature = period["temperature"]
@@ -79,9 +98,5 @@ def get_weather(coordinates):
     forecast = process_forecast(coordinates)
     return [forecastZone,forecastHourly,forecast]
     
-
-
-
-
 
 
