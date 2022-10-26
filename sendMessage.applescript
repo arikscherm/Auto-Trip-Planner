@@ -5,7 +5,8 @@ on run {targetBuddyPhone, targetMessage}
         set messageLength to count targetMessage
         set extensionLength to count ".png"
         if (text (messageLength - extensionLength + 1) thru messageLength of targetMessage = ".png") then
-            send POSIX file targetMessage to targetBuddy
+            set targetFile to (POSIX file targetMessage as alias)
+            send targetFile to targetBuddy
         else
             send targetMessage to targetBuddy
         end if
