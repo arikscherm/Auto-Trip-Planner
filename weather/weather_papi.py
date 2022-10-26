@@ -7,6 +7,7 @@ import pprint
 
 def process_forecastZone(coordinates):
     forecastZone_response = weather_sapi.get_forecastZone(coordinates)
+    if(str(type(forecastZone_response)) == "<class 'str'>"): return forecastZone_response
     forecastName = forecastZone_response["properties"]["name"]
     forecastState = forecastZone_response["properties"]["state"]
     return "View weather for {}, {} below".format(forecastName,forecastState)
@@ -56,7 +57,7 @@ def process_forecastHourly(coordinates):
                 forecast_message += name + '\n' + details + '\n' + str(temperature) + ' ' + temperature_unit + '\n' + str(wind_speed) + ' ' + wind_direction + '\n' + '\n'
         return forecast_message
     except:
-        return "something went wrong"
+        return "Weather Data Not Found For Requested Point"
         
     
 
@@ -82,7 +83,7 @@ def process_forecast(coordinates):
             forecast_message += forecast_name + ' ' + forecast_interval + '\n' + details + '\n' + str(temperature) + ' ' + temperature_unit + '\n' + str(wind_speed) + ' ' + wind_direction + '\n' + '\n'
         return forecast_message
     except:
-        return "something went wrong"
+        return "Weather Data Not Found For Requested Point"
 
 
 
@@ -98,5 +99,8 @@ def get_weather(coordinates):
     forecast = process_forecast(coordinates)
     return [forecastZone,forecastHourly,forecast]
     
+
+
+
 
 
