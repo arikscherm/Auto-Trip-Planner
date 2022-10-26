@@ -18,13 +18,13 @@ def navigate_to_beta_page(driver,message_text):
     accept_cookies.click()
     time.sleep(1)
     driver.find_element(by=By.XPATH, value = '//*[@id="autocomplete-dataset"]').send_keys(message_text)
+    print("Searching summitpost for",message_text)
     time.sleep(3)
-
-    #
     first_result = driver.find_element(by=By.XPATH, value = '/html/body/div[2]/div[1]/div[1]/div[1]/div[2]/form/div/div/span/span/div[1]/span/div[1]/div[1]')
-    
-    print("clicking first result")
+    print("Clicking on first result")
+    #TODO: Handle ElementClickInterceptedException
     first_result.click()
+    print("Loading summitpost article")
     return driver
 
 
@@ -36,44 +36,32 @@ def get_beta_page_link(driver):
     return link_to_beta_page
 
 
-
-
 def screenshot(driver):
-    
+    time.sleep(5)
     print("creating lambda function")
     S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
     print("setting window size")
     driver.set_window_size(S('Width'),S('Height')) # May need manual adjustment
-    print("finding part to screenshot")
+    print("Finding information to screenshot")
     driver.find_element(by=By.CLASS_NAME, value = 'cover-image-wrap').screenshot('beta/cover_image.png')
+    time.sleep(2)
     driver.find_element(by=By.CLASS_NAME, value = 'full-content').screenshot('beta/beta.png')
-    
-   
     print("screenshot created, closing driver")
-    #driver.close()
-    #driver.quit()
-
-
+    
 
 def get_beta(message_text):
     url = "https://www.summitpost.org/"
     driver = open_driver(url,headless=True)
-    print(message_text)
     navigate_to_beta_page(driver,message_text)
 
     #comment out this block for pictures and ads
     # link_to_beta_page = get_beta_page_link(driver)
     # driver = open_driver(link_to_beta_page,headless=True)
     
-    
-    
     screenshot(driver)
     
     
     
-    
-#main()
-
 
 #TODO: do 14ers.com and all trails, ryan in the SW
 
