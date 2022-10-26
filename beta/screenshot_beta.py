@@ -46,19 +46,22 @@ def screenshot(driver):
     driver.find_element(by=By.CLASS_NAME, value = 'cover-image-wrap').screenshot('beta/cover_image.png')
     time.sleep(2)
     driver.find_element(by=By.CLASS_NAME, value = 'full-content').screenshot('beta/beta.png')
-    print("screenshot created, closing driver")
+    print("Screenshot created, closing driver")
     
 
 def get_beta(message_text):
     url = "https://www.summitpost.org/"
     driver = open_driver(url,headless=True)
-    navigate_to_beta_page(driver,message_text)
+    try:
+        navigate_to_beta_page(driver,message_text)
 
-    #comment out this block for pictures and ads
-    # link_to_beta_page = get_beta_page_link(driver)
-    # driver = open_driver(link_to_beta_page,headless=True)
-    
-    screenshot(driver)
+        #comment out this block for pictures and ads
+        # link_to_beta_page = get_beta_page_link(driver)
+        # driver = open_driver(link_to_beta_page,headless=True)
+        
+        screenshot(driver)
+    except: 
+        return "Unable to find information on summitpost"
     
     
     
