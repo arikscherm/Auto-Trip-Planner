@@ -1,12 +1,19 @@
 import campsites.freecampsitesnet
+import campsites.find_close_camps
 import callAppleScript
+import time
+
+    
 
 def send_campsites(phone_number,coordinates):
-    campsites.freecampsitesnet.write_text_file(coordinates)
-    f = open("campsites/results.txt")
-    campsites_message = f.read()
-    # print(campsites_message[0:20])
-    callAppleScript.send_message(phone_number,campsites_message[0:20])
+    
+    exec = campsites.freecampsitesnet.write_text_file(coordinates)
+    campsites_message = campsites.find_close_camps.prepare_message(coordinates)
+    print("sending message")
+    print(len(campsites_message))
+    #print(campsites_message)
+    callAppleScript.divide_and_send_message(phone_number,campsites_message)
+    time.sleep(1)
     return "Successfully sent campsites"
 
 
