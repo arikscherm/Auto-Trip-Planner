@@ -16,10 +16,10 @@ def open_driver(url,headless):
 def navigate_to_beta_page(driver,message_text):
     accept_cookies = driver.find_element(by=By.XPATH, value='//*[@id="CybotCookiebotDialogBodyButtonAccept"]')
     accept_cookies.click()
-    time.sleep(1)
+    time.sleep(5)
     driver.find_element(by=By.XPATH, value = '//*[@id="autocomplete-dataset"]').send_keys(message_text)
     print("Searching summitpost for",message_text)
-    time.sleep(3)
+    time.sleep(10)
     first_result = driver.find_element(by=By.XPATH, value = '/html/body/div[2]/div[1]/div[1]/div[1]/div[2]/form/div/div/span/span/div[1]/span/div[1]/div[1]')
     print("Clicking on first result")
     #TODO: Handle ElementClickInterceptedException
@@ -44,7 +44,7 @@ def screenshot(driver):
     driver.set_window_size(S('Width'),S('Height')) # May need manual adjustment
     print("Finding information to screenshot")
     driver.find_element(by=By.CLASS_NAME, value = 'cover-image-wrap').screenshot('beta/cover_image.png')
-    time.sleep(2)
+    time.sleep(3)
     driver.find_element(by=By.CLASS_NAME, value = 'full-content').screenshot('beta/beta.png')
     print("Screenshot created, closing driver")
     
