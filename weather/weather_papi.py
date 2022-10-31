@@ -21,7 +21,6 @@ def process_forecastHourly(coordinates):
         forecastHourly = forecastHourly_response["properties"]["periods"]
         forecast_message = ""
         start_date = forecastHourly[0]["startTime"][8:10]
-        print(start_date)
         for period in forecastHourly[0:24]:
             full_date = period["startTime"][0:16].replace("T", " ")
             if(int(full_date[12])%2 == 0):

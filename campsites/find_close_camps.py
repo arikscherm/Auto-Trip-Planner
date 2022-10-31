@@ -19,6 +19,10 @@ def read_camps_text():
         if(line[0:4] == 'GPS:'):
             coordinates_from_text = line[5:].replace('\n','')
             gps_key = coordinates_from_text
+        
+        elif(line[0:11] == "AddressGPS:"):
+            coordinates_from_text = line[12:].replace('\n','')
+            gps_key = coordinates_from_text
 
         elif('*' in line):
             camps_by_gps[gps_key] = camp_list[len(camp_list)-1]
@@ -37,8 +41,21 @@ def find_camp_distances(coordinates,camps_by_gps):
         #should just use list comprehension
         camp_coordinates_as_list = camp_coordinates.split(',')
         camp_coordinates_object = {"latitude":float(camp_coordinates_as_list[0]),"longitude":float(camp_coordinates_as_list[1])}
-        
-        camp_distances_by_gps[camp_coordinates] = math.dist([camp_coordinates_object["latitude"],camp_coordinates_object["longitude"]],[coordinates["latitude"],coordinates["longitude"]])
+        try:
+            camp_latitude = float(camp_coordinates_object["latitude"])
+            camp_longitude = float(camp_coordinates_object["longitude"])
+            location_latitude = float(coordinates["latitude"])
+            location_longitude = float(coordinates["longitude"])
+
+
+            camp_distances_by_gps[camp_coordinates] = math.dist([camp_latitude,camp_longitude],[location_latitude,location_longitude])
+        except Exception as e:
+            print("something unexpected occurred.")
+            print("the coordinates type is", camp_coordinates_object["latitude"], type(camp_coordinates_object["latitude"]), camp_coordinates_object["longitude"], type(camp_coordinates_object["longitude"]) )
+            print(camp_coordinates_object)
+            print(e)
+            return "Something didnt work"
+            
     return camp_distances_by_gps
 
 #get 5 closest camp's gps
@@ -63,11 +80,13 @@ def get_close_camp_info(close_camps,camps_by_gps):
 
 def prepare_message(coordinates):
     camps_by_gps = read_camps_text()
+    #print(print("******camps by gps******", camps_by_gps))
     camp_distances_by_gps = find_camp_distances(coordinates,camps_by_gps)
+    if(isinstance(camp_distances_by_gps,str)): return "Something went wrong"
     close_camps = find_closest_camps(camp_distances_by_gps)
     closest_camps_info = get_close_camp_info(close_camps,camps_by_gps)
     
     #print(closest_camps_info)
-    closest_camps_info =   closest_camps_info.replace('"',"'")
+    closest_camps_info = closest_camps_info.replace('"',"'")
     return closest_camps_info
 

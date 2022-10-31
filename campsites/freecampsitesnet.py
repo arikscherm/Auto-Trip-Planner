@@ -41,7 +41,7 @@ def click_tent_icon(camp):
     #Click on green tent to make the popup link appear
     try:
         camp.click()
-        time.sleep(3)
+        time.sleep(4)
     except:
         print("Click exception came up. This should cause the previous campsite to be repeated in the txt file.")
 
@@ -56,7 +56,7 @@ def  get_campsite_html(driver):
     driver.execute_script(javascript)
     #Switch to new tab
     driver.switch_to.window(driver.window_handles[-1])
-    time.sleep(6)
+    time.sleep(7)
     #Extract html
     html = driver.page_source
     return html
@@ -105,6 +105,7 @@ def create_message(free_camps,driver):
             success += 1
             driver.close()
             driver.switch_to.window(driver.window_handles[0])
+            print("Successfully added campsite no {}".format(i))
         except Exception as e: 
             print("unable to add campsite no {}".format(i))
             fails += 1
