@@ -16,7 +16,7 @@ def execute_query():
     )
     query_results = tuple(query_result.fetchone())
     con.close()
-    os.chdir("<Directory of Project>")
+    os.chdir("/Users/arischermer/Desktop/heftyFish2")
     return query_results
 
 

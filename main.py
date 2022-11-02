@@ -1,11 +1,11 @@
-import geocode.geocode as geocode
 import connectChatDB
-import time
+import send.geocode.geocode as geocode
+import send.sendCoordinates
+import send.sendWeather
+import send.sendBeta
+import send.sendCamps
 from datetime import datetime
-import sendWeather
-import sendCoordinates
-import sendBeta
-import sendCamps
+import time
 
 
 
@@ -31,17 +31,12 @@ def run():
         message_text = new_message_data[2].replace('.','')
         time_of_last_message = datetime.strptime(new_message_data[3],'%Y-%m-%d %H:%M:%S')
 
+        coordinates = send.sendCoordinates.getCoordinates(message_text)
+        dict_coordinates = send.sendCoordinates.get_dict_coordinates(message_text)
+
+        send.sendCoordinates.send_coordinates(phone_number,coordinates)
+        send.sendWeather.send_weather(phone_number,dict_coordinates)
+        send.sendBeta.send_beta(phone_number,message_text)
+        send.sendCamps.send_campsites(phone_number,dict_coordinates)
         
-
-        coordinates = sendCoordinates.getCoordinates(message_text)
-        dict_coordinates = sendCoordinates.get_dict_coordinates(message_text)
-
-        
-        sendCoordinates.sendCoordinates(phone_number,coordinates)
-        sendWeather.send_weather(phone_number,dict_coordinates)
-        sendBeta.send_beta(phone_number,message_text)
-        sendCamps.send_campsites(phone_number,dict_coordinates)
-        
-
-
 run()

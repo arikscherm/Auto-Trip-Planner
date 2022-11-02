@@ -43,9 +43,9 @@ def screenshot(driver):
     print("setting window size")
     driver.set_window_size(S('Width'),S('Height')) # May need manual adjustment
     print("Finding information to screenshot")
-    driver.find_element(by=By.CLASS_NAME, value = 'cover-image-wrap').screenshot('beta/cover_image.png')
+    driver.find_element(by=By.CLASS_NAME, value = 'cover-image-wrap').screenshot('/Users/arischermer/Desktop/heftyFish2/send/beta/summitpost/cover_image.png')
     time.sleep(3)
-    driver.find_element(by=By.CLASS_NAME, value = 'full-content').screenshot('beta/beta.png')
+    driver.find_element(by=By.CLASS_NAME, value = 'full-content').screenshot('/Users/arischermer/Desktop/heftyFish2/send/beta/summitpost/beta.png')
     print("Screenshot created, closing driver")
     
 

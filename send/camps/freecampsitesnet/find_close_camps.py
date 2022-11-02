@@ -5,14 +5,11 @@ import math
 given_coordinates = {"latitude":37.2753,"longitude":-107.8801}
 
 
-#Need to format message and refactor but should work other than that.
-#Create dictionary of with Coordinates : Camp Information pairs
+
 def read_camps_text():
     camp_list = ['']
     camps_by_gps = {}
-    #gps_key = ''
-    #f = open('results.txt','r')
-    f = open('campsites/results.txt', 'r')
+    f = open('/Users/<Directory of Project>/heftyFish/send/camps/freecampsitesnet/results.txt', 'r')
     for line in f:
         camp_list[len(camp_list)-1] += line.replace('\n','  ')
 
