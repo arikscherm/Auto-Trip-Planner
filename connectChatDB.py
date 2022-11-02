@@ -3,7 +3,7 @@ import os
 
 
 def open_db():
-    path = "/Users/arischermer/Library/Messages/"
+    path = "/Users/<Home Directory>/Library/Messages/"
     os.chdir(path)
     con = sqlite3.connect('chat.db')
     return con
