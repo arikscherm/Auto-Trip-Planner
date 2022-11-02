@@ -1,8 +1,8 @@
-import geocode.geocode
-import callAppleScript
+import send.geocode.geocode
+import send.callAppleScript
 
 def getCoordinates(message_text):
-    coordinates = str(geocode.geocode.get_coordinates(message_text))
+    coordinates = str(send.geocode.geocode.get_coordinates(message_text))
     if(coordinates == "None"): 
         coordinates = "Unable to find location. Please try again."
         return coordinates
@@ -19,5 +19,5 @@ def get_dict_coordinates(message_text):
     return dict_coordinates
 
 
-def sendCoordinates(phone_number,coordinates):
-    callAppleScript.send_message(phone_number,coordinates)
+def send_coordinates(phone_number,coordinates):
+    send.callAppleScript.send_message(phone_number,coordinates)

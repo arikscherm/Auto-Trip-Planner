@@ -3,7 +3,7 @@ import os
 
 
 def open_db():
-    path = "/Users/<Home Directory>/Library/Messages/"
+    path = "/Users/arischermer/Library/Messages/"
     os.chdir(path)
     con = sqlite3.connect('chat.db')
     return con
@@ -16,7 +16,7 @@ def execute_query():
     )
     query_results = tuple(query_result.fetchone())
     con.close()
-    os.chdir("<Directory of Project>")
+    os.chdir("/Users/arischermer/Desktop/heftyFish2")
     return query_results
 
 

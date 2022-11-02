@@ -12,7 +12,7 @@ def read_camps_text():
     camps_by_gps = {}
     #gps_key = ''
     #f = open('results.txt','r')
-    f = open('campsites/results.txt', 'r')
+    f = open('/Users/arischermer/Desktop/heftyFish2/send/camps/freecampsitesnet/results.txt', 'r')
     for line in f:
         camp_list[len(camp_list)-1] += line.replace('\n','  ')
 
