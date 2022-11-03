@@ -3,10 +3,9 @@ import os
 
 
 def open_db():
-    #path = "/Users/<Home Directory>/Library/Messages/"
-    #DELETE AND UNCOMMENT ABOVE
-    path = "/Users/arischermer/Library/Messages/"
-
+    
+    
+    path = "/Users/<Home Directory>/Library/Messages/"
     os.chdir(path)
     con = sqlite3.connect('chat.db')
     return con
@@ -19,10 +18,6 @@ def execute_query():
     )
     query_results = tuple(query_result.fetchone())
     con.close()
-    #os.chdir("<Directory of Project>")
-    #DELETE AND UNCOMMENT ABOVE
-    os.chdir("/Users/arischermer/Desktop/heftyFish")
 
+    os.chdir("/<Location of Project>/heftyFish")
     return query_results
-
-

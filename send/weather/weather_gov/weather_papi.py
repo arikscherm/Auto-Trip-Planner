@@ -1,4 +1,4 @@
-from weather import weather_sapi
+import send.weather.weather_gov.weather_sapi
 #import weather_sapi
 from datetime import datetime
 import pprint
@@ -6,7 +6,7 @@ import pprint
 
 
 def process_forecastZone(coordinates):
-    forecastZone_response = weather_sapi.get_forecastZone(coordinates)
+    forecastZone_response = send.weather.weather_gov.weather_sapi.get_forecastZone(coordinates)
     if(str(type(forecastZone_response)) == "<class 'str'>"): return forecastZone_response
     forecastName = forecastZone_response["properties"]["name"]
     forecastState = forecastZone_response["properties"]["state"]
@@ -14,7 +14,7 @@ def process_forecastZone(coordinates):
    
 
 def process_forecastHourly(coordinates):
-    forecastHourly_response = weather_sapi.get_forecastHourly(coordinates)
+    forecastHourly_response = send.weather.weather_gov.weather_sapi.get_forecastHourly(coordinates)
     if("status" in forecastHourly_response and forecastHourly_response["status"] == 500): 
         return forecastHourly_response["detail"]
     try:
@@ -64,7 +64,7 @@ def process_forecastHourly(coordinates):
 
 
 def process_forecast(coordinates):
-    forecast_response = weather_sapi.get_forecast(coordinates)
+    forecast_response = send.weather.weather_gov.weather_sapi.get_forecast(coordinates)
     try:
         forecast = forecast_response["properties"]["periods"]
         forecast_message = ""
