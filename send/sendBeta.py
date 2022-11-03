@@ -10,8 +10,8 @@ def send_beta(phone_number,message_text):
         send.applescript.callAppleScript.send_message(phone_number,status)
         return "Sucessfully sent error message: Beta not found"
     
-    cover_image_screenshot = "/Users/<Directory of Project>/heftyFish/send/beta/summitpost/cover_image.png"
-    beta_screenshot = "/Users/<Directory of Project>/heftyFish/send/beta/summitpost/beta.png"
+    cover_image_screenshot = "<Location of Proejct>/heftyFish/send/beta/summitpost/cover_image.png"
+    beta_screenshot = "<Location of Proejct>/heftyFish/send/beta/summitpost/beta.png"
 
     
     send.callAppleScript.send_message(phone_number,cover_image_screenshot)
