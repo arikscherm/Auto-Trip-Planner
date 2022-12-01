@@ -1,17 +1,16 @@
 import send.beta.summitpost.screenshot_beta
 import send.callAppleScript
-import os
 import time
 
 
 def send_beta(phone_number,message_text):
     status = send.beta.summitpost.screenshot_beta.get_beta(message_text)
     if(status == "Unable to find information on summitpost"):
-        send.applescript.callAppleScript.send_message(phone_number,status)
+        send.callAppleScript.send_message(phone_number,status)
         return "Sucessfully sent error message: Beta not found"
     
-    cover_image_screenshot = "<Location of Proejct>/heftyFish/send/beta/summitpost/cover_image.png"
-    beta_screenshot = "<Location of Proejct>/heftyFish/send/beta/summitpost/beta.png"
+    cover_image_screenshot = "/Users/<LOCATION OF PROJECT>/heftyFish/send/beta/summitpost/cover_image.png"
+    beta_screenshot = "/Users/<LOCATION OF PROEJCT>/heftyFish/send/beta/summitpost/beta.png"
 
     
     send.callAppleScript.send_message(phone_number,cover_image_screenshot)
