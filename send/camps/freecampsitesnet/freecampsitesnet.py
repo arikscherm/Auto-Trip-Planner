@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 import time
+import os
 
 #This is a clean script. No handling for click exception yet.
 
@@ -118,7 +119,7 @@ def write_text_file(coordinates):
     driver = open_driver(coordinates,headless=True)
     free_camps = find_free_camps(driver)
     message = create_message(free_camps,driver)
-    f = open("/<Location of Project>/heftyFish/send/camps/freecampsitesnet/results.txt",'w')
+    f = open(os.environ.get('HEFTYFISH_PROJECT_LOCATION')+"/send/camps/freecampsitesnet/results.txt",'w')
    # f = open("results.txt",'w')
     f.write(message)
     f.close()

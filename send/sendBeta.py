@@ -1,6 +1,7 @@
 import send.beta.summitpost.screenshot_beta
 import send.callAppleScript
 import time
+import os
 
 
 def send_beta(phone_number,message_text):
@@ -9,8 +10,8 @@ def send_beta(phone_number,message_text):
         send.callAppleScript.send_message(phone_number,status)
         return "Sucessfully sent error message: Beta not found"
     
-    cover_image_screenshot = "/Users/<LOCATION OF PROJECT>/heftyFish/send/beta/summitpost/cover_image.png"
-    beta_screenshot = "/Users/<LOCATION OF PROEJCT>/heftyFish/send/beta/summitpost/beta.png"
+    cover_image_screenshot = os.environ.get('HEFTYFISH_PROJECT_LOCATION')+"/send/beta/summitpost/cover_image.png"
+    beta_screenshot = os.environ.get('HEFTYFISH_PROJECT_LOCATION')+ "/send/beta/summitpost/beta.png"
 
     
     send.callAppleScript.send_message(phone_number,cover_image_screenshot)

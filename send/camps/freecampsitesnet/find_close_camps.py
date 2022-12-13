@@ -1,4 +1,5 @@
 import math
+import os
 
 
 #will be passed from send camps
@@ -9,7 +10,7 @@ given_coordinates = {"latitude":37.2753,"longitude":-107.8801}
 def read_camps_text():
     camp_list = ['']
     camps_by_gps = {}
-    f = open('/<Location of Project>/heftyFish/send/camps/freecampsitesnet/results.txt', 'r')
+    f = open(os.environ.get('HEFTYFISH_PROJECT_LOCATION')+'/send/camps/freecampsitesnet/results.txt', 'r')
     for line in f:
         camp_list[len(camp_list)-1] += line.replace('\n','  ')
 
