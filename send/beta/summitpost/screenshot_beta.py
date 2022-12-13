@@ -64,8 +64,6 @@ def get_beta(message_text):
     except: 
         return "Unable to find information on summitpost"
     
-    
-get_beta("longs peak")
 
 #TODO: do 14ers.com and all trails, ryan in the SW
 
