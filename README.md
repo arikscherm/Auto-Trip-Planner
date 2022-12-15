@@ -1,3 +1,3 @@
-# heftyFish
+# auto-trip-planner
 
-heftyFish is an automated trip planner that is interfaced with iMessage.
+Auto Trip Planner is an automated trip planner that is interfaced with iMessage.
