@@ -37,20 +37,21 @@ def get_beta_page_link(driver):
     return link_to_beta_page
 
 
-def screenshot(driver):
+def screenshot(driver,filename):
     time.sleep(5)
     print("creating lambda function")
     S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
     print("setting window size")
     driver.set_window_size(S('Width'),S('Height')) # May need manual adjustment
     print("Finding information to screenshot")
-    driver.find_element(by=By.CLASS_NAME, value = 'cover-image-wrap').screenshot(os.environ.get('HEFTYFISH_PROJECT_LOCATION')+'/send/beta/summitpost/cover_image.png')
+    driver.find_element(by=By.CLASS_NAME, value = 'cover-image-wrap').screenshot(os.environ.get('HEFTYFISH_PROJECT_LOCATION')+f'/send/beta/summitpost/{filename}_cover_image.png')
     time.sleep(3)
-    driver.find_element(by=By.CLASS_NAME, value = 'full-content').screenshot(os.environ.get('HEFTYFISH_PROJECT_LOCATION')+'/send/beta/summitpost/beta.png')
+    driver.find_element(by=By.CLASS_NAME, value = 'full-content').screenshot(os.environ.get('HEFTYFISH_PROJECT_LOCATION')+f'/send/beta/summitpost/{filename}_beta.png')
     print("Screenshot created, closing driver")
     
 
 def get_beta(message_text):
+    filename = message_text.replace(' ','_')
     url = "https://www.summitpost.org/"
     driver = open_driver(url,headless=True)
     try:
@@ -60,7 +61,7 @@ def get_beta(message_text):
         # link_to_beta_page = get_beta_page_link(driver)
         # driver = open_driver(link_to_beta_page,headless=True)
         
-        screenshot(driver)
+        screenshot(driver,filename)
     except: 
         return "Unable to find information on summitpost"
     

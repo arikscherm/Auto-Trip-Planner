@@ -14,7 +14,7 @@ def send_campsites(phone_number,coordinates):
     #print(campsites_message)
     send.call_apple_script.divide_and_send_message(phone_number,campsites_message)
     time.sleep(1)
-    return "Successfully sent campsites"
+    return campsites_message
 
 
 #send_campsites("14145736394",{"latitude":37.2753,"longitude":-107.8801})

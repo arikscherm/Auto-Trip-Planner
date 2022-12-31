@@ -10,12 +10,16 @@ def send_beta(phone_number,message_text):
         send.call_apple_script.send_message(phone_number,status)
         return "Sucessfully sent error message: Beta not found"
     
-    cover_image_screenshot = os.environ.get('HEFTYFISH_PROJECT_LOCATION')+"/send/beta/summitpost/cover_image.png"
-    beta_screenshot = os.environ.get('HEFTYFISH_PROJECT_LOCATION')+ "/send/beta/summitpost/beta.png"
+
+    cover_image_name = message_text.replace(" ","_") + "_cover_image.png"
+    beta_image_name = message_text.replace(" ","_") + "_beta_image.png"
+
+    cover_image_screenshot = os.environ.get('HEFTYFISH_PROJECT_LOCATION')+"/send/beta/summitpost/" + cover_image_name
+    beta_screenshot = os.environ.get('HEFTYFISH_PROJECT_LOCATION')+ "/send/beta/summitpost/" + beta_image_name
 
     
     send.call_apple_script.send_message(phone_number,cover_image_screenshot)
     time.sleep(1)
     send.call_apple_script.send_message(phone_number,beta_screenshot)
     
-    return "Successfully sent beta"
+    return [cover_image_screenshot,beta_screenshot]
